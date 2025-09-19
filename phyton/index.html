@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nossa historia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cor-fundo: #121212;
+            --cor-texto: #ffffff;
+            --cor-texto-secundaria: #b3b3b3;
+            --cor-destaque: #1db954;
+            --cor-botoes: #282828;
+            --cor-borda: #404040;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            height: 100vh;
+            background: var(--cor-fundo);
+            overflow-y: scroll;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .player-container {
+            position: relative;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), var(--cor-fundo) 70%);
+            padding-top: 40px;
+            padding-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .player-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1544005313-94ef7f400fe2?q=80&w=1887&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            filter: blur(50px) brightness(60%);
+            z-index: -1;
+            transition: background-image 0.5s ease-in-out;
+        }
+
+        .album-art {
+            width: 80%;
+            max-width: 350px;
+            aspect-ratio: 1 / 1;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            margin-bottom: 30px;
+        }
+
+        .track-info h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .track-info p {
+            font-size: 1.2em;
+            color: var(--cor-texto-secundaria);
+            margin: 5px 0 20px;
+        }
+
+        .progress-bar {
+            width: 90%;
+            height: 4px;
+            background-color: var(--cor-botoes);
+            border-radius: 2px;
+            margin: 0 auto 30px;
+        }
+
+        .progress-bar-fill {
+            width: 0%;
+            height: 100%;
+            background-color: var(--cor-destaque);
+            border-radius: 2px;
+            transition: width 0.1s linear;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .controls button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid var(--cor-borda);
+            background-color: var(--cor-botoes);
+            color: var(--cor-texto);
+            font-size: 2em;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        #btn-like {
+            color: var(--cor-destaque);
+            border-color: var(--cor-destaque);
+        }
+
+        .controls button:hover {
+            transform: scale(1.1);
+        }
+
+        .music-player {
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: transparent;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            width: 90%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: none;
+            overflow: hidden;
+        }
+        
+        .profile-content {
+            background-color: var(--cor-fundo);
+            padding: 20px;
+        }
+
+        .secao {
+            margin-bottom: 40px;
+        }
+
+        .secao h2 {
+            font-size: 1.5em;
+            font-weight: 700;
+            border-left: 3px solid var(--cor-destaque);
+            padding-left: 10px;
+        }
+
+        .secao p {
+            font-size: 1em;
+            line-height: 1.6;
+            color: var(--cor-texto-secundaria);
+        }
+
+        .galeria {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+        }
+
+        .galeria img {
+            width: 100%;
+            border-radius: 10px;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Estilos para o novo Relógio */
+        .relogio {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            padding-top: 20px;
+        }
+
+        .relogio .unidade {
+            font-size: 2.5em;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .relogio .label {
+            font-size: 0.8em;
+            color: var(--cor-texto-secundaria);
+            text-transform: uppercase;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="player-container">
+            <img class="album-art" src="CAP.JPG" alt="Foto Principal de Perfil">
+            <div class="track-info">
+                <h1>Yasmin Savian</h1>
+                <p>Minha Gostosa</p>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-bar-fill"></div>
+            </div>
+            
+            <div class="controls">
+                <button id="btn-dislike" title="Não Curti">👎</button>
+                <button id="btn-like" title="Curtir">❤️</button>
+                <button id="btn-superlike" title="Super Curtir">✨</button>
+            </div>
+            
+           <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/2yhtzzLeMc3t0LgtlZMgS8?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+
+        <div class="profile-content">
+            <div class="secao">
+                <h2>Recado pra ti Gostosa</h2>
+                <p>
+                    Amor, queria agradecer por estar comigo.
+Por não desistir de nós, mesmo quando eu sou difícil de lidar. Desculpa por te irritar ou por atitudes que te deixa-se chateada.
+Eu tô tentando melhorar a cada dia, porque você merece o melhor de mim. Eu te amo minha gostosa e atraves disso quero te mostrar que meu amor eterno.
+                </p>
+            </div>
+            <div class="secao">
+                <h2>Galeria de Fotos</h2>
+                <div class="galeria">
+                    <img src="IMG_5198.JPG" alt="Young woman smiling warmly while sitting outdoors in a sunlit park surrounded by green trees and grass creating a cheerful and relaxed atmosphere">
+                    <img src="IMG_1.JPG" alt="Foto de Galeria 2">
+                    <img src="IMG_2.JPG" alt="Foto de Galeria 3">
+                </div>
+            </div>
+            <div class="secao">
+                <h2>Nossa História</h2>
+                <div class="relogio" id="tempo-juntos">
+                    <div class="unidade-tempo">
+                        <span class="unidade" id="anos">0</span>
+                        <p class="label">anos</p>
+                    </div>
+                    <div class="unidade-tempo">
+                        <span class="unidade" id="dias">0</span>
+                        <p class="label">dias</p>
+                    </div>
+                    <div class="unidade-tempo">
+                        <span class="unidade" id="horas">0</span>
+                        <p class="label">horas</p>
+                    </div>
+                    <div class="unidade-tempo">
+                        <span class="unidade" id="minutos">0</span>
+                        <p class="label">minutos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const btnLike = document.getElementById('btn-like');
+        const btnDislike = document.getElementById('btn-dislike');
+        const btnSuperlike = document.getElementById('btn-superlike');
+
+        btnLike.addEventListener('click', () => {
+            alert('Você deu um "like" no perfil! ✅');
+        });
+
+        btnDislike.addEventListener('click', () => {
+            alert('Você "passou" para o próximo perfil. 👎');
+        });
+
+        btnSuperlike.addEventListener('click', () => {
+            alert('Você deu um "Super Like"! ⭐');
+        });
+
+       // --- LÓGICA DO RELÓGIO EM TEMPO REAL ---
+
+// Data oficial: 15/06/2024 às 22h37
+const dataEncontro = new Date('2024-06-15T22:37:00');
+
+function atualizarRelogio() {
+    const agora = new Date();
+    const diferencaMs = agora.getTime() - dataEncontro.getTime();
+
+    const totalMinutos = Math.floor(diferencaMs / (1000 * 60));
+    const totalHoras = Math.floor(totalMinutos / 60);
+    const totalDias = Math.floor(totalHoras / 24);
+    const totalAnos = Math.floor(totalDias / 365.25);
+
+    const anos = totalAnos;
+    const dias = totalDias % 365.25;
+    const horas = totalHoras % 24;
+    const minutos = totalMinutos % 60;
+
+    document.getElementById('anos').textContent = anos;
+    document.getElementById('dias').textContent = Math.floor(dias);
+    document.getElementById('horas').textContent = horas;
+    document.getElementById('minutos').textContent = minutos;
+}
+
+// Atualiza o relógio a cada minuto
+setInterval(atualizarRelogio, 60000);
+
+// Chama a função ao iniciar
+atualizarRelogio();
+
+    </script>
+</body>
+</html>
